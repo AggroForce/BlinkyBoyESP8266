@@ -158,35 +158,35 @@ bool process_client(WiFiClient client){
   Serial.println(req);
 
   String s;
-  if(req == "/hello"){
+  if (req == "/hewwo") {
     IPAddress ip = WiFi.localIP();
     String ipStr = String(ip[0]) + '.' + String(ip[1]) + '.' + String(ip[2]) + '.' + String(ip[3]);
     s = "HTTP/1.1 200 OK\r\nContent-Type: text/html\r\n\r\n<!DOCTYPE HTML>\r\n<html>Hello from ESP8266 at ";
     s += ipStr;
     s += "</html>\r\n\r\n";
     Serial.println("Sending 200");
-  }else if(req == "/full"){
+  } else if(req == "/full") {
     s = "HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\n\r\nTurning on!\r\n\r\n";
     LIGHT_MODE = 1;
-  }else if(req == "/on"){
+  } else if(req == "/on") {
     s = "HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\n\r\nTurning on!\r\n\r\n";
     LIGHT_MODE = 2;
-  }else if(req == "/off"){
+  } else if(req == "/off") {
     s = "HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\n\r\nTurning off!\r\n\r\n";
     LIGHT_MODE = 3;
-  }else if(req == "/uwu"){
+  } else if(req == "/uwu") {
     s = "HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\n\r\nUh oh, better close your eyes!\r\n\r\n";
     LIGHT_MODE = 4;
-  }else if(req == "/sine"){
+  } else if(req == "/sine") {
     s = "HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\n\r\nUh oh, better close your eyes!\r\n\r\n";
     LIGHT_MODE = 6;
-  }else if(req.startsWith("/color?0x")){
+  } else if(req.startsWith("/color?0x")) {
     String cs = req.substring(9,15);
     int col = strtol(cs.c_str(),0,16);
     Serial.printf("Setting color to %s = %d\n", cs.c_str(), col);
     fill_solid(leds, NUM_LEDS, col);
     LIGHT_MODE = 5;
-  }else{
+  } else {
     s = "HTTP/1.1 404 Not Found\r\n\r\n";
     Serial.println("Sending 404");
   }
@@ -236,7 +236,7 @@ void loop(void) {
   FastLED.delay(1000/FRAMES_PER_SECOND);
 }
 
-void default_behavior(bool first){
+void default_behavior(bool first) {
   if(first){
     FastLED.setBrightness(DEF_BRIGHTNESS);
     #ifdef DEF_COLOR
@@ -245,33 +245,33 @@ void default_behavior(bool first){
   }
 }
 
-void full_brightness(bool first){
+void full_brightness(bool first) {
   if(first){
     fill_solid( leds, NUM_LEDS, CRGB::White);
     FastLED.setBrightness(255);
   } 
 }
 
-void full_red(bool first){
+void full_red(bool first) {
   if(first){
     fill_solid( leds, NUM_LEDS, CRGB::Red);
     FastLED.setBrightness(255); 
   }
 }
 
-void on(bool first){
+void on(bool first) {
   if(first){
     FastLED.setBrightness(255); 
   }
 }
 
-void off(bool first){
+void off(bool first) {
   if(first){
     FastLED.setBrightness(0);
   }
 }
 
-void uwu(bool first){
+void uwu(bool first) {
   if(first){
     FastLED.setBrightness(255);
   }
@@ -279,8 +279,7 @@ void uwu(bool first){
 }
 
 int count = 0;
-void sinelon(bool first)
-{
+void sinelon(bool first) {
   if(first){
     FastLED.setBrightness(255);
   }
@@ -289,4 +288,3 @@ void sinelon(bool first)
   leds[count++] += CHSV( millis()/10, 255, 192);
   count%=NUM_LEDS;
 }
-    
