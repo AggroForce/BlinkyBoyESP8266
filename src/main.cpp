@@ -11,6 +11,7 @@
 
 #include <ESP8266WiFi.h>
 #include <ESP8266mDNS.h>
+#include <ESP8266HTTPClient.h>
 #include <WiFiClient.h>
 #include <utils/HTTP.h>
 
@@ -28,6 +29,7 @@ CRGB leds[NUM_LEDS];
 
 // TCP server at port 80 will respond to HTTP requests
 WiFiServer server(80);
+HTTPClient http;
 
 int LIGHT_MODE = 0;
 
@@ -136,7 +138,7 @@ bool process_client(WiFiClient client){
 
   HTTPMethod m = parse_option(dbuf.c_str());
 
-  Serial.printf("Input: %s\nParsed method: %x %s\n", dbuf.c_str(), m, option_str(m));
+  Serial.printf("Input: %s\nParsed method: %d %s\n", dbuf.c_str(), m, option_str(m));
 
   // Read the first line of HTTP request
   int le = dbuf.indexOf('\r');
